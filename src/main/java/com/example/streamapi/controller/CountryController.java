@@ -2,17 +2,12 @@ package com.example.streamapi.controller;
 
 import com.example.streamapi.model.Country;
 import com.example.streamapi.service.CountryService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.controlsfx.control.RangeSlider;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -35,22 +30,50 @@ public class CountryController implements Initializable {
     @FXML
     private TextField countryNameFilter;
 
+    @FXML
+    private RangeSlider populationRange;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         countryService = new CountryService();
-        countryName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        countryPopulation.setCellValueFactory(new PropertyValueFactory<>("population"));
-        countryArea.setCellValueFactory(new PropertyValueFactory<>("area"));
 
+        setCellValueFactories();
         countryTable.setItems(countryService.getCountryList());
+
+        setRanges();
 
         setListeners();
     }
 
+    private void setCellValueFactories() {
+        countryName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        countryPopulation.setCellValueFactory(new PropertyValueFactory<>("population"));
+        countryArea.setCellValueFactory(new PropertyValueFactory<>("area"));
+    }
+
 
     private void setListeners() {
-        countryNameFilter.textProperty().addListener((_, _, newText) -> {
-            countryTable.setItems(countryService.filterByName(newText));
+        countryNameFilter.textProperty().addListener((_, _, newText)
+                -> countryTable.setItems(countryService.filterByName(newText)));
+
+        populationRange.lowValueProperty().addListener((_, _, newValue) -> {
+            countryTable.setItems(countryService.filterByMinPopulation(newValue.intValue()));
+            System.out.println(newValue);
         });
+
+        populationRange.highValueProperty().addListener((_, _, newValue) -> {
+            countryTable.setItems(countryService.filterByMaxPopulation(newValue.intValue()));
+            System.out.println(newValue);
+        });
+    }
+
+    private void setRanges() {
+        int minPopulation = countryService.getMinPopulation();
+        int maxPopulation = countryService.getMaxPopulation();
+
+        this.populationRange.setMin(minPopulation);
+        this.populationRange.setMax(maxPopulation);
+        this.populationRange.setLowValue(minPopulation);
+        this.populationRange.setHighValue(maxPopulation);
     }
 }

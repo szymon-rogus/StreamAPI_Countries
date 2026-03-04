@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.RangeSlider?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.streamapi.controller.CountryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.streamapi.controller.CountryController">
    <children>
       <TableView fx:id="countryTable" prefHeight="600.0" prefWidth="600.0">
         <columns>
@@ -16,12 +20,18 @@
       </TableView>
       <Pane layoutX="600.0" prefHeight="600.0" prefWidth="300.0">
          <children>
-            <TextField fx:id="countryNameFilter" layoutX="136.0" layoutY="52.0" />
-            <Label layoutX="26.0" layoutY="56.0" prefHeight="17.0" prefWidth="88.0" text="Country:">
+            <TextField fx:id="countryNameFilter" layoutX="107.0" layoutY="52.0" prefHeight="25.0" prefWidth="178.0" />
+            <Label layoutX="21.0" layoutY="56.0" prefHeight="17.0" prefWidth="73.0" text="Country:">
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font>
             </Label>
+            <Label alignment="CENTER" layoutX="103.0" layoutY="129.0" prefHeight="17.0" prefWidth="80.0" text="Population:" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <RangeSlider fx:id="populationRange" blockIncrement="10000000" majorTickUnit="1000000000" showTickMarks="true" showTickLabels="true" layoutX="16.0" layoutY="166.0" prefHeight="14.0" prefWidth="267.0" />
          </children>
          <opaqueInsets>
             <Insets left="5.0" />
